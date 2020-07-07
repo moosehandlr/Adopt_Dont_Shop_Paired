@@ -1,8 +1,9 @@
 require "rails_helper.rb"
 
-describe Shelter, type: :model do
+RSpec.describe Shelter, type: :model do
   describe "associations" do
     it { should have_many(:pets) }
+    it { should have_many(:reviews) }
   end
 
   describe "validations" do
