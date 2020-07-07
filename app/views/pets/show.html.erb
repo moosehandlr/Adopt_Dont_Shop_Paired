@@ -1,0 +1,21 @@
+<html lang="en">
+<div class="container">
+  <nav class="navbar">
+    <%= link_to("Home Page", "/") %>
+    <%= link_to("Pet Index", "/pets") %>
+    <%= link_to("Shelter Index", "/shelters") %>
+  </nav>
+  <main>
+    <%= image_tag(@pet.image,
+                  alt: "Photo of #{@pet.name}.",
+                  id: "#{@pet.name.downcase.gsub(" ", "-")}-image") %>
+
+    <h1>Name: <%= link_to(@pet.name, "/pets/#{@pet.id}") %></h1>
+    <%= tag.p "Description: #{@pet.description}" %>
+    <%= tag.p "Age: #{@pet.approximate_age}" %>
+    <%= tag.p "Sex: #{@pet.sex}" %>
+    <%= tag.p "Status: #{@pet.status}" %>
+    <%= link_to("Update Pet", "/pets/#{@pet.id}/edit") %>
+    <%= link_to("Delete Pet", "/pets/#{@pet.id}/", method: :delete) %>
+  </main>
+</div>
