@@ -27,13 +27,8 @@
           <%= tag.p review.title %>
           <%= tag.p review.rating %>
           <%= tag.p review.content %>
-          <img
-            class="review-pic"
-            src=<%= review.image %>
-            alt="Photo of <%= @shelter.name %>."
-          />
+          <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil?%>
         <% end %>
-
       </section>
 
     </main>
