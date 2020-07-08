@@ -1,19 +1,35 @@
 <html lang="en">
     <div class="container">
+
+    <!-- TODO: move navbar to application.html.erb  -->
     <nav class="navbar">
       <%= link_to("Home Page", "/") %>
       <%= link_to("Pet Index", "/pets") %>
       <%= link_to("Shelter Index", "/shelters") %>
     </nav>
+    <!--   -->
+
     <main>
-      <h1><%= link_to(@shelter.name, "/shelters/#{@shelter.id}") %></h1>
-      <%= link_to("Update Shelter", "/shelters/#{@shelter.id}/edit") %>
-      <%= link_to("Delete Shelter", "/shelters/#{@shelter.id}", method: :delete) %>
-      <% @shelter.attributes.values_at("address", "city", "state", "zip").each do |attribute| %>
+      <section class="shelter-details">
+        <h1><%= link_to(@shelter.name, "/shelters/#{@shelter.id}") %></h1>
+        <%= link_to("Update Shelter", "/shelters/#{@shelter.id}/edit") %>
+        <%= link_to("Delete Shelter", "/shelters/#{@shelter.id}", method: :delete) %>
+        <% @shelter.attributes.values_at("address", "city", "state", "zip").each do |attribute| %>
         <%= tag.p attribute %>
-      <% end %>
-      <aside>
-        <%= link_to("See all the pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets") %>
-      </aside>
+        <% end %>
+        <aside>
+          <%= link_to("See all the pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets") %>
+        </aside>
+      </section>
+
+      <section class="shelter-reviews">
+        <% @reviews.each do |review| %>
+          <%= tag.p review.title %>
+          <%= tag.p review.rating %>
+          <%= tag.p review.content %>
+          <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil?%>
+        <% end %>
+      </section>
+
     </main>
   </div>
