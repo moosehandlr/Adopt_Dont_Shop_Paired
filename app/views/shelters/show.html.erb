@@ -29,6 +29,7 @@
           <%= tag.p review.rating %>
           <%= tag.p review.content %>
           <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil? %>
+          <%= link_to("Edit Review", "/shelters/#{@shelter.id}/reviews/#{review.id}/edit") %>
         <% end %>
       </section>
 
