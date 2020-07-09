@@ -19,4 +19,8 @@ Rails.application.routes.draw do
   post "/shelters/:id/pets", to: "pets#create"
 
   get "/", to: "welcome#index"
+
+  get "/shelters/:id/reviews/new", to: "reviews#new"
+  post "/shelters/:id/reviews", to: "reviews#create"
+
 end

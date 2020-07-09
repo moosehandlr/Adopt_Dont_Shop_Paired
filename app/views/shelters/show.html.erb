@@ -23,11 +23,12 @@
       </section>
 
       <section class="shelter-reviews">
+        <%= link_to("Add Review", "/shelters/#{@shelter.id}/reviews/new") %>
         <% @reviews.each do |review| %>
           <%= tag.p review.title %>
           <%= tag.p review.rating %>
           <%= tag.p review.content %>
-          <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil?%>
+          <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil? %>
         <% end %>
       </section>
 
