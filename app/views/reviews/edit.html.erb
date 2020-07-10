@@ -1,0 +1,27 @@
+<html lang="en">
+  <div class="container">
+
+    <% flash.each do |type, message| %>
+    <p><%= message %></p>
+    <% end %>
+
+    <nav class="navbar">
+      <%= link_to("Home Page", "/") %>
+      <%= link_to("Pet Index", "/pets") %>
+      <%= link_to("Shelter Index", "/shelters") %>
+    </nav>
+
+    <main>
+      <%= form_tag "/shelters/#{@shelter_id}/reviews/#{@review_id}", method: :patch do %>
+        <%= label_tag :title %>
+        <%= text_field_tag :title, @review.title %>
+        <%= label_tag :rating %>
+        <%= text_field_tag :rating, @review.rating %>
+        <%= label_tag :content %>
+        <%= text_field_tag :content, @review.content %>
+        <%= label_tag :image %>
+        <%= text_field_tag :image, @review.image %>
+        <%= submit_tag "Update Review" %>
+      <% end %>
+    </main>
+</div>
