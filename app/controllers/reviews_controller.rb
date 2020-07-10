@@ -22,6 +22,7 @@ class ReviewsController < ApplicationController
   def edit
     @shelter_id = params[:id]
     @review_id = params[:review_id]
+    @review = Review.find(params[:review_id])
   end
 
   def update
