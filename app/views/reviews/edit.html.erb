@@ -1,6 +1,10 @@
 <html lang="en">
   <div class="container">
 
+    <% flash.each do |type, message| %>
+    <p><%= message %></p>
+    <% end %>
+
     <nav class="navbar">
       <%= link_to("Home Page", "/") %>
       <%= link_to("Pet Index", "/pets") %>
