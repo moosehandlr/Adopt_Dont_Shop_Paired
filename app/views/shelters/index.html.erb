@@ -1,11 +1,5 @@
 <html lang="en">
   <div class="container">
-    <nav class="navbar">
-    <%= link_to("Home Page", "/") %>
-    <%= link_to("Pet Index", "/pets") %>
-    <%= link_to("Shelter Index", "/shelters") %>
-    <%= link_to("New Shelter", "/shelters/new") %>
-  </nav>
   <main class="index">
   <% @shelters.each do |shelter| %>
     <section>
@@ -14,5 +8,8 @@
       <%= link_to("Delete Shelter", "/shelters/#{shelter.id}", method: :delete) %>
       <% end %>
     </section>
+    <footer>
+    <%= link_to("New Shelter", "/shelters/new") %>
+    </footer>
   </main>
 </div>

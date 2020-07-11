@@ -1,10 +1,5 @@
 <html lang="en">
   <div class="container">
-    <nav class="navbar">
-      <%= link_to("Home Page", "/") %>
-      <%= link_to("Pet Index", "/pets") %>
-      <%= link_to("Shelter Index", "/shelters") %>
-    </nav>
     <main>
       <%= form_tag "/shelters/#{@shelter_id}/pets", method: :post do %>
         <%= label_tag "Image URL" %>

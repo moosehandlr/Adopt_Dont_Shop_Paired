@@ -9,7 +9,11 @@
   </head>
 
   <body>
-    <!-- put navbar here later -->
+    <nav class="navbar">
+      <%= link_to("Home Page", "/") %>
+      <%= link_to("Pet Index", "/pets") %>
+      <%= link_to("Shelter Index", "/shelters") %>
+    </nav>
     <%= yield %>
   </body>
 </html>
