@@ -31,13 +31,3 @@ RSpec.describe 'When I visit the shelters show page' do
     expect(page).to_not have_content("#{@review1.title}")
   end
 end
-
-
-
-# User Story 7, Delete a Shelter Review
-#
-# As a visitor,
-# When I visit a shelter's show page,
-# I see a link next to each shelter review to delete the review.
-# When I delete a shelter review I am returned to the shelter's show page
-# And I should no longer see that shelter review
