@@ -30,6 +30,7 @@
           <%= tag.p review.content %>
           <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil? %>
           <%= link_to("Edit Review", "/shelters/#{@shelter.id}/reviews/#{review.id}/edit") %>
+          <%= button_to("Delete Review", "/shelters/#{@shelter.id}/reviews/#{review.id}", method: :delete) %>
         <% end %>
       </section>
 
