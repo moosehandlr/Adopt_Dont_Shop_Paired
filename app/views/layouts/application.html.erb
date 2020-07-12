@@ -17,7 +17,7 @@
       <%= link_to("Home Page", "/") %>
       <%= link_to("Pet Index", "/pets") %>
       <%= link_to("Shelter Index", "/shelters") %>
-      <%= link_to("Favorites: #{@favorites.nil? ? 0 : @favorites.total_count}", "/favorites") %>
+      <%= link_to("Favorites: #{favorites.total_count}", "/favorites") %>
     </nav>
     <%= yield %>
   </body>
