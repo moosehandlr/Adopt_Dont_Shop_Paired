@@ -10,12 +10,13 @@ class FavoritesController < ApplicationController
 
   def index
     @pets = Pet.all
+    @pets = @pets.find_all { |pet| favorites.pets.has_key?(pet.id.to_s) }
   end
 
   def destroy
     pet = Pet.find(params[:pet_id])
     favorites.remove_pet(params[:pet_id])
     flash[:notice] = "#{pet.name} has been removed from your favorites."
-    redirect_to "/pets/#{params[:pet_id]}"
+    redirect_back(fallback_location: "/favorites")
   end
 end
