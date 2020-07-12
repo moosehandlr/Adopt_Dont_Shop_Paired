@@ -43,4 +43,22 @@ RSpec.describe "Pet favorites spec" do
       end
     end
   end
+
+  describe "After I favorite a pet" do
+    it "The favorites counter will be update on every page" do
+      visit "/"
+      expect(page).to have_content("Favorites: 0")
+
+      visit "/pets/#{@doggo.id}"
+      expect(page).to have_content("Favorites: 0")
+
+      click_button "Add Pet to Favorites"
+
+      expect(current_path).to eq("/pets/#{@doggo.id}")
+      expect(page).to have_content("Favorites: 1")
+
+      visit "/"
+      expect(page).to have_content("Favorites: 1")
+    end
+  end
 end
