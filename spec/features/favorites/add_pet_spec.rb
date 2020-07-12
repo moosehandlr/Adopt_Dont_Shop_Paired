@@ -24,7 +24,7 @@ RSpec.describe "Pet favorites spec" do
     end
   end
 
-  describe "When I visit a pet's show page"
+  describe "When I visit a pet's show page" do
     it "I can favorite a pet" do
       visit "/pets/#{@doggo.id}"
 
@@ -42,5 +42,5 @@ RSpec.describe "Pet favorites spec" do
         expect(page).to have_content("Favorites: 1")
       end
     end
-
+  end
 end
