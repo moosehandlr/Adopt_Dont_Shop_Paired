@@ -6,6 +6,7 @@
                   id: "#{@pet.name.downcase.gsub(" ", "-")}-image") %>
 
     <h1>Name: <%= link_to(@pet.name, "/pets/#{@pet.id}") %></h1>
+    <%= button_to "Add Pet to Favorites", "/favorites/#{@pet.id}", method: :patch %>
     <%= tag.p "Description: #{@pet.description}" %>
     <%= tag.p "Age: #{@pet.approximate_age}" %>
     <%= tag.p "Sex: #{@pet.sex}" %>
