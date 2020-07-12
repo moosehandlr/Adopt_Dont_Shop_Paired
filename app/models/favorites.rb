@@ -14,4 +14,9 @@ class Favorites
     @pets[pet_id] ||= 0
     @pets[pet_id] += 1
   end
+
+  def remove_pet(id)
+    @pets.delete_if { |pet_id, _| pet_id == id.to_s }
+  end
+
 end
