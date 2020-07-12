@@ -12,5 +12,10 @@
     <%= tag.p "Status: #{@pet.status}" %>
     <%= link_to("Update Pet", "/pets/#{@pet.id}/edit") %>
     <%= link_to("Delete Pet", "/pets/#{@pet.id}/", method: :delete) %>
+    <% if favorites.pets.has_key?(@pet.id.to_s) %>
+    <%= button_to("Remove Pet from Favorites", "/favorites/#{@pet.id}", method: :delete)%>
+    <% else %>
+    <%= button_to("Add Pet to Favorites", "/favorites/#{@pet.id}", method: :patch) %>
+    <% end %>
   </main>
 </div>

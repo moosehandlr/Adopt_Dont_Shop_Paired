@@ -9,10 +9,15 @@
   </head>
 
   <body>
+    <% flash.each do |type, message| %>
+    <p><%= message %></p>
+    <% end %>
+
     <nav class="navbar">
       <%= link_to("Home Page", "/") %>
       <%= link_to("Pet Index", "/pets") %>
       <%= link_to("Shelter Index", "/shelters") %>
+      <%= link_to("Favorites: #{favorites.total_count}", "/favorites") %>
     </nav>
     <%= yield %>
   </body>

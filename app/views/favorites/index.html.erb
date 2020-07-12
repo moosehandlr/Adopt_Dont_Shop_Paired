@@ -1,0 +1,15 @@
+<html lang="en">
+<div class="container">
+  <main class="index">
+    <% @pets.each do |pet| %>
+      <section>
+        <%= image_tag(pet.image, alt: "#{pet.name}'s photo.", id: "#{pet.name.downcase}-image") %>
+        <h2>Name: <%= link_to(pet.name, "/pets/#{pet.id}") %></h2>
+        <%= button_to("Remove Pet from Favorites", "/favorites/#{pet.id}", method: :delete)%>
+      </section>
+    <% end %>
+    <footer>
+      <%= link_to("Remove All Pets from Favorites", "/favorites", method: :delete) %>
+    </footer>
+  </main>
+</div>

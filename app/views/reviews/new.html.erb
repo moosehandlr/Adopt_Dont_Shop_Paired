@@ -1,10 +1,6 @@
 <html lang="en">
   <div class="container">
 
-    <% flash.each do |type, message| %>
-    <p><%= message %></p>
-    <% end %>
-
     <main>
       <%= form_tag "/shelters/#{@shelter_id}/reviews", method: :post do %>
         <%= label_tag :title %>
