@@ -23,17 +23,18 @@ RSpec.describe "New Pet Application Spec" do
                         status: "Adoptable")
 
     @pets = [@pet1, @pet2]
+
+    @pets.each do |pet|
+      visit "/pets/#{pet.id}"
+      click_button "Add Pet to Favorites"
+
+      visit "/favorites"
+    end
   end
 
 
   describe "As a visitor, after I add pets to my favorites page" do
     it "I can submit an application to adopt them" do
-      @pets.each do |pet|
-        visit "/pets/#{pet.id}"
-        click_button "Add Pet to Favorites"
-      end
-
-      visit "/favorites"
 
       expect(page).to have_content(@pet1.name)
       expect(page).to have_content(@pet2.name)
@@ -43,6 +44,33 @@ RSpec.describe "New Pet Application Spec" do
 
       page.check("select-catto")
       page.uncheck("select-catto")
+
+      page.check("select-doggo")
+
+      fill_in :name, with: "Billy Joel"
+      fill_in :address, with: "22 Jump Street"
+      fill_in :city, with: "Denver"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: "80808"
+      fill_in :phone_number, with: "000000000"
+      fill_in :description, with: "Famous and rich"
+
+      click_button "Submit Application"
+
+      expect(page).to have_content("Application successfully submitted!")
+      expect(current_path).to eq("/favorites")
+
+      expect(page).to_not have_content(@pet1.name)
+      expect(page).to have_content(@pet2.name)
+    end
+  end
+
+  describe "When I fail to fill out the form completely" do
+    it "I'm redirected back to the form and I see a flash message indicating to complete the necessary fields" do
+
+      click_link "Adopt Pets"
+
+      page.check("select-catto")
 
       page.check("select-doggo")
 
@@ -56,11 +84,33 @@ RSpec.describe "New Pet Application Spec" do
 
       click_button "Submit Application"
 
-      expect(page).to have_content("Application successfully submitted!")
-      expect(current_path).to eq("/favorites")
+      expect(page).to_not have_content("Application successfully submitted!")
+      expect(page).to have_content("Form must be completed and pets selected in order to submit the application.")
+      expect(current_path).to eq("/applications/new")
+    end
 
-      expect(page).to_not have_content(@pet1.name)
-      expect(page).to have_content(@pet2.name)
+    it "I cannot submit application without selecting pets" do
+
+      click_link "Adopt Pets"
+
+      page.uncheck("select-catto")
+
+      page.uncheck("select-doggo")
+
+      fill_in :name, with: "Billy Joel"
+      fill_in :address, with: "22 Jump Street"
+      fill_in :city, with: "Denver"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: "80808"
+      fill_in :phone_number, with: "000000000"
+      fill_in :description, with: "Famous and rich"
+
+      click_button "Submit Application"
+
+      expect(page).to_not have_content("Application successfully submitted!")
+      expect(page).to have_content("Form must be completed and pets selected in order to submit the application.")
+      expect(current_path).to eq("/applications/new")
+
     end
   end
 end
