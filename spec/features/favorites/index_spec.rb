@@ -77,4 +77,45 @@ RSpec.describe "Pet favorites spec" do
       expect(page).to have_content("You have no favorited pets")
     end
   end
+
+# As a visitor
+# After one or more applications have been created
+# When I visit the favorites index page
+# I see a section on the page that has a list of all of the pets that have at least one application on them
+# Each pet's name is a link to their show page
+
+  describe "After one or more applications have been created" do
+    it "I see a SECTION with a list of pets that have an application" do
+
+      visit "/pets/#{@doggo.id}"
+
+      click_button "Add Pet to Favorites"
+
+      visit "/pets/#{@catto.id}"
+
+      click_button "Add Pet to Favorites"
+
+      visit "/favorites"
+
+      click_link "Adopt Pets"
+
+      page.check("select-catto")
+      page.check("select-doggo")
+
+      fill_in :name, with: "Billy Joel"
+      fill_in :address, with: "22 Jump Street"
+      fill_in :city, with: "Denver"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: "80808"
+      fill_in :phone_number, with: "000000000"
+      fill_in :description, with: "Famous and rich"
+
+      click_button "Submit Application"
+      expect(current_path).to eq("/favorites")
+
+      within("#pending-pets")
+        expect(page).to have_link(@doggo.name, href: "/pets/#{@doggo.id}")
+        expect(page).to have_link(@catto.name, href: "/pets/#{@catto.id}")
+    end
+  end
 end

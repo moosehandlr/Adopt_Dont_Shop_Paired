@@ -8,6 +8,11 @@
         <%= button_to("Remove Pet from Favorites", "/favorites/#{pet.id}", method: :delete)%>
       </section>
     <% end %>
+    <!-- <section id="pending-pets">
+      <% @pending_pets.each do |pet| %>
+      <%= link_to(pet.name, "/pets/#{pet.id}") %>
+      <% end %>
+    </section> -->
     <footer>
       <%= link_to("Adopt Pets", "/applications/new", method: :get) %>
       <%= link_to("Remove All Pets from Favorites", "/favorites", method: :delete) %>
