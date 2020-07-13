@@ -15,4 +15,26 @@ describe Pet, type: :model do
     it { should validate_presence_of(:description) }
     it { should validate_presence_of(:status) }
   end
+
+  describe "methods" do
+    it "#change_status" do
+      placeholder_image = "generic-image-placeholder.png"
+      shelter1 = Shelter.create(name: "Doggo House", address: "1323 Paper St", city: "Denver", state: "CO", zip: "000000")
+      doggo = Pet.create(
+        image: placeholder_image,
+        name: "Doggo",
+        approximate_age: 3,
+        sex: "M",
+        shelter: shelter1,
+        description: "What a cute animal!",
+        status: "Adoptable"
+      )
+
+      expect(doggo.status).to eq("Adoptable")
+
+      doggo.change_status
+
+      expect(doggo.status).to eq("Pending")
+    end
+  end
 end
