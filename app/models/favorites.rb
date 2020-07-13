@@ -19,4 +19,9 @@ class Favorites
     @pets.delete_if { |pet_id, _| pet_id == id.to_s }
   end
 
+  def favorite_pets
+    @pets.keys.map do |pet_key|
+      Pet.find(pet_key.to_i)
+    end
+  end
 end
