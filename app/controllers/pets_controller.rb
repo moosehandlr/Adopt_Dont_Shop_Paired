@@ -5,8 +5,8 @@ class PetsController < ApplicationController
 
   def show
     pet
-    if pet.pet_applications.any? { |pet_app| pet_app.pet_app_status == "Approved" }
-      app_id = pet.pet_applications.where(pet_app_status: "Approved").first.application_id
+    if pet.pet_applications.any?(&:approved?)
+      app_id = pet.pet_applications.detect(&:approved?).application_id
       @approved_name = Application.find(app_id).name
     end
   end

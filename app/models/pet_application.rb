@@ -7,4 +7,8 @@ class PetApplication < ApplicationRecord
   def change_status
     self.pet_app_status = "Approved"
   end
+
+  def approved?
+    self.pet_app_status == "Approved"
+  end
 end

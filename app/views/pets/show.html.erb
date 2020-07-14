@@ -7,10 +7,10 @@
 
     <h1>Name: <%= link_to(@pet.name, "/pets/#{@pet.id}") %></h1>
 
-    <% if @pet.pet_applications.any? { |pet_app| pet_app.pet_app_status == "Approved" } %>
+    <% if @pet.pet_applications.any?(&:approved?) %>
     <h2>On hold for <%= "#{@approved_name}" %></h2>
     <% end %>
-    
+
     <%= tag.p "Description: #{@pet.description}" %>
     <%= tag.p "Age: #{@pet.approximate_age}" %>
     <%= tag.p "Sex: #{@pet.sex}" %>

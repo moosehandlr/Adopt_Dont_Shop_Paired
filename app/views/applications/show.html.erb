@@ -11,6 +11,8 @@
       <%= @applicant.description %>
       <% @applicant.pets.uniq.each do |pet|  %>
       <%= link_to(pet.name, "/pets/#{pet.id}") %>
+
+      <!-- only show this link if no pet_apps have been approved -->
       <%= link_to(
               "Approve Application for #{pet.name}",
               "/pet_applications/#{@applicant.id}/#{pet.id}",
