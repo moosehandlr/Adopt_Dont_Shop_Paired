@@ -46,7 +46,9 @@ RSpec.describe "Approving an Application Spec" do
       description: "Rich and famous")
 
     PetApplication.create!(pet_id: @doggo.id, application_id: @billy_joel.id )
-    # PetApplication.create!(pet_id: @catto.id, application_id: @prince.id )
+
+    PetApplication.create!(pet_id: @doggo.id, application_id: @prince.id )
+    PetApplication.create!(pet_id: @catto.id, application_id: @prince.id )
   end
 
   describe "As a visitor" do
@@ -56,7 +58,7 @@ RSpec.describe "Approving an Application Spec" do
         visit "/applications/#{@billy_joel.id}"
 
         expect(page).to have_link("Approve Application for #{@doggo.name}",
-            href: "/pet_applications/#{@billy_joel.id}/#{@doggo.id}")
+          href: "/pet_applications/#{@billy_joel.id}/#{@doggo.id}")
 
         click_link "Approve Application for #{@doggo.name}"
 
@@ -64,6 +66,27 @@ RSpec.describe "Approving an Application Spec" do
 
         expect(page).to have_content("Status: Pending")
         expect(page).to have_content("On hold for Billy Joel")
+      end
+    end
+  end
+
+  describe "Users can get approved to adopt more than one pet" do
+    describe "When an application is made for more than one pet" do
+      it "I am able to approve the application for any number of pets" do
+        approve_cat_link = "Approve Application for #{@catto.name}"
+        approve_dog_link = "Approve Application for #{@doggo.name}"
+
+        visit "/applications/#{@prince.id}"
+        expect(page).to have_link(approve_dog_link, href: "/pet_applications/#{@prince.id}/#{@doggo.id}")
+
+        click_link approve_dog_link
+        expect(current_path).to eq("/pets/#{@doggo.id}")
+
+        visit "/applications/#{@prince.id}"
+        expect(page).to have_link(approve_cat_link, href: "/pet_applications/#{@prince.id}/#{@catto.id}")
+
+        click_link approve_cat_link
+        expect(current_path).to eq("/pets/#{@catto.id}")
       end
     end
   end
