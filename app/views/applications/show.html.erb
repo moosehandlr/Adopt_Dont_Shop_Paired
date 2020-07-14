@@ -9,8 +9,12 @@
       <%= @applicant.zip %>
       <%= @applicant.phone_number %>
       <%= @applicant.description %>
-      <%= @applicant.pets.each do |pet|  %>
-        <%= link_to(pet.name, "/pets/#{pet.id}") %>
+      <% @applicant.pets.uniq.each do |pet|  %>
+      <%= link_to(pet.name, "/pets/#{pet.id}") %>
+      <%= link_to(
+              "Approve Application for #{pet.name}",
+              "/pet_applications/#{@applicant.id}/#{pet.id}",
+              method: :patch) %>
       <% end %>
     </section>
   </main>
