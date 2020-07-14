@@ -4,8 +4,13 @@ RSpec.describe "Applications Show Page Spec" do
 
   before :each do
     @placeholder_image = "generic-image-placeholder.png"
+    # @image_name = @placeholder_image[0...-4]
 
-    @shelter1 = Shelter.create(name: "Doggo House", address: "1323 Paper St", city: "Denver", state: "CO", zip: "000000")
+    @shelter1 = Shelter.create(name: "Doggo House",
+                               address: "1323 Paper St",
+                               city: "Denver",
+                               state: "CO",
+                               zip: "000000")
 
     @pet1 = Pet.create(image: @placeholder_image,
                         name: "Doggo",
@@ -23,52 +28,33 @@ RSpec.describe "Applications Show Page Spec" do
                         description: "What a cute animal!",
                         status: "Adoptable")
 
-    @pets = [@pet1, @pet2]
+    @application = Application.create!(name: "Billy Joel",
+                                      address: "22 Jump Street",
+                                      city: "Denver",
+                                      state: "CO",
+                                      zip: "80808",
+                                      phone_number: "000000000",
+                                      description: "Famous and rich")
 
-    @pets.each do |pet|
-      visit "/pets/#{pet.id}"
-      click_button "Add Pet to Favorites"
-
-      visit "/favorites"
-
-      click_link "Adopt Pets"
-
-      page.check("select-catto")
-      page.check("select-doggo")
-
-      fill_in :name, with: "Billy Joel"
-      fill_in :address, with: "22 Jump Street"
-      fill_in :city, with: "Denver"
-      fill_in :state, with: "CO"
-      fill_in :zip, with: "80808"
-      fill_in :phone_number, with: "000000000"
-      fill_in :description, with: "Famous and rich"
-
-      click_button "Submit Application"
-
-    end
+    PetApplication.create!(pet_id: @pet1.id, application_id: @application.id )
+    PetApplication.create!(pet_id: @pet2.id, application_id: @application.id )
+  end
 
   describe "When I visit /applications/:id" do
-    describe "" do
-      it "" do
-        # visit "/applications/#{applications.id}"
-        # As a visitor
-        # When I visit an applications show page "/applications/:id"
-        # I can see the following:
-        #
-        # name
-        # address
-        # city
-        # state
-        # zip
-        # phone number
-        # Description of why the applicant says they'd be a good home for this pet(s)
-        #
-        # (all names of pets should be links to their show page)
-        # names of all pet's that this application is for
+    it "I can see the applicant details and pet names for that application" do
+      visit "/applications/#{@application.id}"
+
+      within(".application-details") do
+        expect(page).to have_content("Billy Joel")
+        expect(page).to have_content("22 Jump Street")
+        expect(page).to have_content("Denver")
+        expect(page).to have_content("CO")
+        expect(page).to have_content("80808")
+        expect(page).to have_content("000000000")
+        expect(page).to have_content("Famous and rich")
+        expect(page).to have_link(@pet1.name, href: "/pets/#{@pet1.id}")
+        expect(page).to have_link(@pet2.name, href: "/pets/#{@pet2.id}")
       end
     end
   end
-end
-
 end
