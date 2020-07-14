@@ -5,21 +5,22 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-
     selected_pets = params.keys.find_all { |key| key.include?("select-") }
+    application = Application.new(applications_params)
 
-    if applications_params.values.any?(&:empty?) || selected_pets.empty?
-      flash[:submitted] = "Form must be completed and pets selected in order to submit the application."
-      redirect_to "/applications/new"
-    else
-      selected_pets.each do |pet|
-        p = Pet.find(params[pet].to_i)
-        p.change_status
-        p.save
-        favorites.remove_pet(params[pet])
+    if application.save && !selected_pets.empty?
+      application.pets << selected_pets.map { |pet| Pet.find(params[pet].to_i) }
+      application.pets.each do |pet|
+        pet.change_status
+        pet.save
+        PetApplication.create(pet_id: pet.id, application_id: application.id )
+        favorites.remove_pet(pet.id)
       end
       flash[:submitted] = "Application successfully submitted!"
       redirect_to "/favorites"
+    else
+      flash[:submitted] = "Form must be completed and pets selected in order to submit the application."
+      redirect_to "/applications/new"
     end
   end
 

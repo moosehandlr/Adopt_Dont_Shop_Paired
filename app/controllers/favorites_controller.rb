@@ -9,16 +9,8 @@ class FavoritesController < ApplicationController
   end
 
   def index
-    @all_pets = Pet.all
-    # @pending_pets = @all_pets.find_all do |pet|
-    #   pet.status == "Pending"
-    # end
     @pending_pets = Pet.where(status: "Pending")
-
-    @pets = @all_pets.find_all { |pet| favorites.pets.has_key?(pet.id.to_s) }
-    # @pets = favorites.favorite_pets
-    flash[:notice] = "You have no favorited pets" if @pets.empty?
-    # require "pry"; binding.pry
+    flash[:notice] = "You have no favorited pets" if favorites.favorite_pets.empty?
   end
 
   def destroy
