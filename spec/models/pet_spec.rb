@@ -17,6 +17,21 @@ describe Pet, type: :model do
   end
 
   describe "methods" do
+    it "has a default status" do
+      placeholder_image = "generic-image-placeholder.png"
+      shelter1 = Shelter.create(name: "Doggo House", address: "1323 Paper St", city: "Denver", state: "CO", zip: "000000")
+      doggo = Pet.create(
+        image: placeholder_image,
+        name: "Doggo",
+        approximate_age: 3,
+        sex: "M",
+        shelter: shelter1,
+        description: "What a cute animal!")
+
+      expect(doggo.status).to eq("Adoptable")
+    end
+
+
     it "#change_status" do
       placeholder_image = "generic-image-placeholder.png"
       shelter1 = Shelter.create(name: "Doggo House", address: "1323 Paper St", city: "Denver", state: "CO", zip: "000000")
@@ -27,8 +42,7 @@ describe Pet, type: :model do
         sex: "M",
         shelter: shelter1,
         description: "What a cute animal!",
-        status: "Adoptable"
-      )
+        status: "Adoptable")
 
       expect(doggo.status).to eq("Adoptable")
 
