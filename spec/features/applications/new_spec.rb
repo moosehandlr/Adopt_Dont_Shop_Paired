@@ -3,8 +3,13 @@ require "rails_helper"
 RSpec.describe "New Pet Application Spec" do
   before :each do
     @placeholder_image = "generic-image-placeholder.png"
+    @image_name = @placeholder_image[0...-4]
 
-    @shelter1 = Shelter.create(name: "Doggo House", address: "1323 Paper St", city: "Denver", state: "CO", zip: "000000")
+    @shelter1 = Shelter.create(name: "Doggo House",
+                               address: "1323 Paper St",
+                               city: "Denver",
+                               state: "CO",
+                               zip: "000000")
 
     @pet1 = Pet.create(image: @placeholder_image,
                         name: "Doggo",
@@ -44,7 +49,7 @@ RSpec.describe "New Pet Application Spec" do
 
       page.check("select-catto")
       page.uncheck("select-catto")
-
+      
       page.check("select-doggo")
 
       fill_in :name, with: "Billy Joel"
@@ -60,8 +65,16 @@ RSpec.describe "New Pet Application Spec" do
       expect(page).to have_content("Application successfully submitted!")
       expect(current_path).to eq("/favorites")
 
-      expect(page).to_not have_content(@pet1.name)
-      expect(page).to have_content(@pet2.name)
+      within("#favorite-pets") do
+        expect(page).to have_content(@pet2.name)
+        catto_image = find("#catto-image")
+        expect(catto_image[:src]).to include(@image_name)
+        expect(catto_image[:alt]).to eq("#{@pet2.name}'s photo.")
+      end
+
+      within("#pending-pets") do
+        expect(page).to have_content(@pet1.name)
+      end
     end
   end
 
