@@ -2,14 +2,14 @@
 <div class="container">
   <main class="index">
     <% @pets.each do |pet| %>
-      <section>
+      <section class="<%= "#{pet.name.downcase}" %>-section">
         <%= image_tag(pet.image, alt: "#{pet.name}'s photo.", id: "#{pet.name.downcase}-image") %>
         <h2>Name: <%= link_to(pet.name, "/pets/#{pet.id}") %></h2>
         <%= tag.p "Age: #{pet.approximate_age}" %>
         <%= tag.p "Sex: #{pet.sex}" %>
         <p>Shelter: <%= link_to(pet.shelter.name, "/shelters/#{pet.shelter.id}") %></p>
         <%= link_to("Update Pet", "/pets/#{pet.id}/edit") %>
-        <%= link_to("Delete Pet", "/pets/#{pet.id}", method: :delete) %>
+        <%= link_to("Delete Pet", "/pets/#{pet.id}", method: :delete) unless pet.has_approved_app? %>
       </section>
     <% end %>
   </main>

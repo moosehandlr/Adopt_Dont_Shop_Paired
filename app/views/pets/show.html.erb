@@ -16,7 +16,7 @@
     <%= tag.p "Sex: #{@pet.sex}" %>
     <%= tag.p "Status: #{@pet.status}" %>
     <%= link_to("Update Pet", "/pets/#{@pet.id}/edit") %>
-    <%= link_to("Delete Pet", "/pets/#{@pet.id}/", method: :delete) %>
+    <%= link_to("Delete Pet", "/pets/#{@pet.id}/", method: :delete) unless @pet.has_approved_app? %>
     <% if favorites.pets.has_key?(@pet.id.to_s) %>
     <%= button_to("Remove Pet from Favorites", "/favorites/#{@pet.id}", method: :delete)%>
     <% else %>
