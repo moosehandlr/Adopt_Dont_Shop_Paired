@@ -85,5 +85,21 @@ RSpec.describe "Pet favorites deletion spec" do
         expect(page).to have_content("Favorites: 0")
       end
     end
+
+    describe "When I delete that pet from the database" do
+      it "They are also removed from the favorites list" do
+        visit @dog_show_page
+        click_button "Add Pet to Favorites"
+
+        visit "/favorites"
+        expect(page).to have_content("Doggo")
+
+        visit @dog_show_page
+        click_link "Delete Pet"
+
+        visit "/favorites"
+        expect(page).to_not have_content("Doggo")
+      end
+    end
   end
 end
