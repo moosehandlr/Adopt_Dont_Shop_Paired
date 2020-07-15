@@ -49,7 +49,7 @@ describe "Pet Update Spec" do
       expect(page).to have_text("Sex: male")
     end
 
-    it "I can edit some of a pet's information" do
+    it "I submit incomplete form and a flash message indicates which field(s) I am missing" do
       placeholder_image = "generic-image-placeholder.png"
       image_name = placeholder_image[0...-4]
 
@@ -78,22 +78,16 @@ describe "Pet Update Spec" do
       new_image = "https://www.webfx.com/blog/images/cdn.designinstruct.com/files/582-how-to-image-placeholders/generic-image-placeholder.png"
 
       fill_in :image, with: new_image
-      fill_in "Name", with: "Super Doggo"
+      fill_in "Name", with: ""
+      fill_in "Description", with: "What a cute dog!"
+      fill_in :approximate_age, with: "5"
+      fill_in "Sex", with: ""
 
       click_button("Update Pet")
-      expect(current_path).to eql(show_page)
+      expect(current_path).to eql("#{show_page}/edit")
 
-      doggo_image = find("#super-doggo-image")
-      expect(doggo_image[:src]).to eq(new_image)
-      expect(doggo_image[:alt]).to eq("Photo of Super Doggo.")
-
-      expect(page).to have_text("Name: Super Doggo")
-      expect(page).to have_text("Description: What a cute animal!")
-      expect(page).to have_text("Age: 3")
-      expect(page).to have_text("Sex: M")
-
+      expect(page).to have_text("Please add name, sex information before submitting")
     end
-
 
   end
 end

@@ -25,7 +25,7 @@ describe "Shelter Update Spec" do
         expect(page).to have_text("The Liono House")
       end
 
-      it "I can edit some of a shelter's information" do
+      it "I submit incomplete form and a flash message indicates which field(s) I am missing" do
         tigre_house = Shelter.create(name: "Tigre House", address: "6126 Library Blvd", city: "Denver", state: "CO", zip: "000000")
         id = tigre_house.id
 
@@ -35,14 +35,14 @@ describe "Shelter Update Spec" do
 
         expect(current_path).to eq("/shelters/#{id}/edit")
 
-        fill_in "Name", with: "The Tigre House"
+        fill_in "Name", with: ""
         fill_in "City", with: "Boulder"
-        fill_in "Zip", with: "10000"
+        fill_in "Zip", with: ""
 
         click_on "Update Shelter"
 
-        expect(current_path).to eq("/shelters")
-        expect(page).to have_text("The Tigre House")
+        expect(current_path).to eq("/shelters/#{id}/edit")
+        expect(page).to have_text("Please add name, address, state, zip information before submitting.")
       end
     end
   end
