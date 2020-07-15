@@ -4,11 +4,15 @@ class PetApplication < ApplicationRecord
 
   attribute :pet_app_status, default: "Not Approved"
 
-  def change_status
-    self.pet_app_status = approved? ? "Not Approved" : "Approved"
+  def change_status_to_approved
+    self.pet_app_status = "Approved"
   end
 
   def approved?
     self.pet_app_status == "Approved"
+  end
+
+  def change_status_to_not_approved
+    self.pet_app_status = "Not Approved"
   end
 end
