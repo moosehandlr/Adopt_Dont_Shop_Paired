@@ -15,7 +15,7 @@
 
     <section class="shelter-reviews">
       <%= link_to("Add Review", "/shelters/#{@shelter.id}/reviews/new") %>
-      <% @reviews.each do |review| %>
+      <% @shelter.reviews.each do |review| %>
       <%= tag.p review.title %>
       <%= tag.p review.rating %>
       <%= tag.p review.content %>
@@ -24,6 +24,10 @@
       <%= button_to("Delete Review", "/shelters/#{@shelter.id}/reviews/#{review.id}", method: :delete) %>
       <% end %>
     </section>
-
+    <footer>
+      <%= tag.p "Count of pets: #{@shelter.pets.size}" %>
+      <%= tag.p "Average review: #{@shelter.reviews.average_rating}" %>
+      <%= tag.p "Applications on file: #{@shelter.pets.flat_map(&:pet_applications).size}" %>
+    </footer>
   </main>
 </div>
