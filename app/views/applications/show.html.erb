@@ -9,14 +9,13 @@
       <%= @applicant.zip %>
       <%= @applicant.phone_number %>
       <%= @applicant.description %>
-      <% @applicant.pets.uniq.each do |pet|  %>
-      <%= link_to(pet.name, "/pets/#{pet.id}") %>
 
-      <!-- only show this link if no pet_apps have been approved -->
-      <%= link_to(
-              "Approve Application for #{pet.name}",
-              "/pet_applications/#{@applicant.id}/#{pet.id}",
-              method: :patch) %>
+      <% @applicant.pets.uniq.each do |pet|  %>
+          <%= link_to(pet.name, "/pets/#{pet.id}") %>
+          <% if PetApplication.where(pet_id: pet.id).none?(&:approved?) %>
+          <%= link_to("Approve Application for #{pet.name}",
+            "/pet_applications/#{@applicant.id}/#{pet.id}", method: :patch) %>
+          <% end %>
       <% end %>
     </section>
   </main>
