@@ -32,15 +32,13 @@ RSpec.describe "New Pet Application Spec" do
     @pets.each do |pet|
       visit "/pets/#{pet.id}"
       click_button "Add Pet to Favorites"
-
-      visit "/favorites"
     end
   end
 
 
   describe "As a visitor, after I add pets to my favorites page" do
     it "I can submit an application to adopt them" do
-
+      visit "/favorites"
       expect(page).to have_content(@pet1.name)
       expect(page).to have_content(@pet2.name)
       expect(page).to have_link("Adopt Pets", href: "/applications/new")
@@ -49,7 +47,7 @@ RSpec.describe "New Pet Application Spec" do
 
       page.check("select-catto")
       page.uncheck("select-catto")
-      
+
       page.check("select-doggo")
 
       fill_in :name, with: "Billy Joel"
@@ -80,7 +78,7 @@ RSpec.describe "New Pet Application Spec" do
 
   describe "When I fail to fill out the form completely" do
     it "I'm redirected back to the form and I see a flash message indicating to complete the necessary fields" do
-
+      visit "/favorites"
       click_link "Adopt Pets"
 
       page.check("select-catto")
@@ -103,7 +101,7 @@ RSpec.describe "New Pet Application Spec" do
     end
 
     it "I cannot submit application without selecting pets" do
-
+      visit "/favorites"
       click_link "Adopt Pets"
 
       page.uncheck("select-catto")
@@ -123,7 +121,6 @@ RSpec.describe "New Pet Application Spec" do
       expect(page).to_not have_content("Application successfully submitted!")
       expect(page).to have_content("Form must be completed and pets selected in order to submit the application.")
       expect(current_path).to eq("/applications/new")
-
     end
   end
 end
