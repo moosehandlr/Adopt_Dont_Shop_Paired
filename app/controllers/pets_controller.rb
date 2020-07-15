@@ -27,10 +27,6 @@ class PetsController < ApplicationController
   end
 
   def update
-    # pet.update(update_pet_params)
-    # pet.save
-    # redirect_to "/pets/#{pet.id}"
-    # require "pry"; binding.pry
     if pet.update(pet_params)
       pet.save
       redirect_to "/pets/#{params[:id]}"
@@ -57,10 +53,6 @@ class PetsController < ApplicationController
     create_params[:shelter_id] = params[:id]
     create_params
   end
-
-  # def update_pet_params
-  #   pet_params.reject { |_, param| param.empty? }
-  # end
 
   def pet
     @pet = Pet.find(params[:id])
