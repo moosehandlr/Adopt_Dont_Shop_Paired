@@ -78,12 +78,6 @@ RSpec.describe "Pet favorites spec" do
     end
   end
 
-# As a visitor
-# After one or more applications have been created
-# When I visit the favorites index page
-# I see a section on the page that has a list of all of the pets that have at least one application on them
-# Each pet's name is a link to their show page
-
   describe "After one or more applications have been created" do
     it "I see a SECTION with a list of pets that have an application" do
 
