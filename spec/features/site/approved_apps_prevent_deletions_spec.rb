@@ -45,6 +45,17 @@ RSpec.describe "Approved PetApps Prevent Deletions" do
         expect(page).to_not have_link("Delete Pet")
       end
 
+      it "I cannot delete the shelter" do
+        expect(@doggo.has_approved_app?).to eq(true)
+
+        visit "/shelters"
+        within ".doggo-house-section" do
+          expect(page).to_not have_link("Delete Shelter")
+        end
+
+        visit "/shelters/#{@shelter1.id}"
+        expect(page).to_not have_link("Delete Shelter")
+      end
     end
   end
 end
