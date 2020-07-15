@@ -9,7 +9,10 @@ class Pet < ApplicationRecord
   attribute :status, default: "Adoptable"
 
   def change_status
-    self.status = "Pending"
+    self.status = adoptable? ? "Pending" : "Adoptable"
   end
 
+  def adoptable?
+    self.status == "Adoptable"
+  end
 end
