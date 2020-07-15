@@ -7,7 +7,7 @@ class PetsController < ApplicationController
     pet
     if pet.pet_applications.any?(&:approved?)
       app_id = pet.pet_applications.detect(&:approved?).application_id
-      @approved_name = Application.find(app_id).name
+      @approved = Application.find(app_id)
     end
   end
 
