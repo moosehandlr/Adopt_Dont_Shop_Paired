@@ -10,6 +10,7 @@ class Pet < ApplicationRecord
 
   def change_status_to_pending
     self.status = "Pending"
+    self.save
   end
 
   def adoptable?
@@ -18,5 +19,11 @@ class Pet < ApplicationRecord
 
   def change_status_to_adoptable
     self.status = "Adoptable"
+    self.save
+  end
+
+  def has_approved_app?
+    pet_apps = PetApplication.where(pet_id: self.id)
+    pet_apps.any?(&:approved?)
   end
 end
