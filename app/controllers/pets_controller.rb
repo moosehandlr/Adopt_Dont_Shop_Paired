@@ -43,6 +43,9 @@ class PetsController < ApplicationController
 
   def destroy
     favorites.remove_pet(params[:id])
+    pet.pet_applications.each do |app|
+      app.destroy!
+    end
     pet.destroy
     redirect_to "/pets"
   end
