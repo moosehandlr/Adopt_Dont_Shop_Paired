@@ -12,8 +12,14 @@ class PetsController < ApplicationController
   end
 
   def create
-    Pet.create(create_pet_params)
-    redirect_to "/shelters/#{params[:id]}/pets"
+    new_pet = Pet.new(create_pet_params)
+    if new_pet.save
+      redirect_to "/shelters/#{params[:id]}/pets"
+    else
+      empty_params = pet_params.to_h.map {|k, v| k if v.empty? }.compact.join(", ")
+      flash[:submitted] = "Please add #{empty_params} information before submitting."
+      redirect_to "/shelters/#{params[:id]}/pets/new"
+    end
   end
 
   def edit
@@ -21,9 +27,18 @@ class PetsController < ApplicationController
   end
 
   def update
-    pet.update(update_pet_params)
-    pet.save
-    redirect_to "/pets/#{pet.id}"
+    # pet.update(update_pet_params)
+    # pet.save
+    # redirect_to "/pets/#{pet.id}"
+    # require "pry"; binding.pry
+    if pet.update(pet_params)
+      pet.save
+      redirect_to "/pets/#{params[:id]}"
+    else
+      empty_params = pet_params.to_h.map {|k, v| k if v.empty? }.compact.join(", ")
+      flash[:submitted] = "Please add #{empty_params} information before submitting."
+      redirect_to "/pets/#{params[:id]}/edit"
+    end
   end
 
   def destroy
@@ -43,9 +58,9 @@ class PetsController < ApplicationController
     create_params
   end
 
-  def update_pet_params
-    pet_params.reject { |_, param| param.empty? }
-  end
+  # def update_pet_params
+  #   pet_params.reject { |_, param| param.empty? }
+  # end
 
   def pet
     @pet = Pet.find(params[:id])
