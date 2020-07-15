@@ -11,7 +11,7 @@ class ApplicationsController < ApplicationController
     if application.save && !selected_pets.empty?
       application.pets << selected_pets.map { |pet| Pet.find(params[pet].to_i) }
       application.pets.each do |pet|
-        pet.change_status
+        pet.change_status_to_pending
         pet.save
         PetApplication.create(pet_id: pet.id, application_id: application.id )
         favorites.remove_pet(pet.id)

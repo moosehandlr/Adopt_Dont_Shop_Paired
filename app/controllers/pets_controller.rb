@@ -5,6 +5,10 @@ class PetsController < ApplicationController
 
   def show
     pet
+    if pet.pet_applications.any?(&:approved?)
+      app_id = pet.pet_applications.detect(&:approved?).application_id
+      @approved_name = Application.find(app_id).name
+    end
   end
 
   def new
@@ -38,7 +42,6 @@ class PetsController < ApplicationController
 
   def create_pet_params
     create_params = pet_params
-    create_params[:status] = "Adoptable"
     create_params[:shelter_id] = params[:id]
     create_params
   end
