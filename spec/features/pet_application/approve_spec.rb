@@ -117,22 +117,26 @@ RSpec.describe "Approving an Application Spec" do
       approve_dog_link = "Approve Application for #{@doggo.name}"
       unapprove_dog_link = "Unapprove Application for #{@doggo.name}"
       application_show_page = "/applications/#{@prince.id}"
+      dog_show_page = "/pets/#{@doggo.id}"
 
       visit application_show_page
       click_link approve_dog_link
 
+      visit "/applications/#{@billy_joel.id}"
+      expect(page).to_not have_link(approve_dog_link)
+      expect(page).to_not have_link(unapprove_dog_link)
+
       visit application_show_page
       expect(page).to_not have_link(approve_dog_link)
 
-      expect(page).to have_link("Unapprove Application for #{@doggo.name}",
-        href: "/pet_applications/#{@prince.id}/#{@doggo.id}/unapprove")
+      expect(page).to have_link(unapprove_dog_link, href: "/pet_applications/#{@prince.id}/#{@doggo.id}/unapprove")
 
       click_link unapprove_dog_link
 
       expect(current_path).to eq(application_show_page)
-      expect(page).to have_link(approve_dog_link)
+      expect(page).to_not have_link(dog_show_page, href: "/pet_applications/#{@prince.id}/#{@doggo.id}")
 
-      visit "/pets/#{@doggo.id}"
+      visit dog_show_page
 
       expect(page).to have_content("Status: Adoptable")
       expect(page).to_not have_content("On hold for Prince")
