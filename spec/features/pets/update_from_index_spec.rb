@@ -9,9 +9,10 @@ describe "Pet Update From Pets Index Pages" do
       state: "CO",
       zip: "000000")
 
-    placeholder_image = "generic-image-placeholder.png"
+    @placeholder_image = "generic-image-placeholder.png"
+
     @dog1 = Pet.create(
-      image: placeholder_image,
+      image: @placeholder_image,
       name: "First Doggo",
       approximate_age: 3,
       sex: "M",
@@ -21,7 +22,7 @@ describe "Pet Update From Pets Index Pages" do
     )
 
     @dog2 = Pet.create(
-      image: placeholder_image,
+      image: @placeholder_image,
       name: "Second Doggo",
       approximate_age: 2,
       sex: "F",
@@ -53,7 +54,12 @@ describe "Pet Update From Pets Index Pages" do
         click_link("Update Pet", href: update_link)
         expect(current_path).to eql(update_link)
 
+        fill_in :image, with: @placeholder_image
         fill_in :name, with: "Super Dog"
+        fill_in "Sex", with: "male"
+        fill_in "Description", with: "What a ferociously cuddly lion!"
+        fill_in :approximate_age, with: "80"
+
         click_button "Update Pet"
 
         expect(current_path).to eql("/pets/#{@dog1.id}")
@@ -82,7 +88,12 @@ describe "Pet Update From Pets Index Pages" do
         click_link("Update Pet", href: update_link)
         expect(current_path).to eql(update_link)
 
+        fill_in :image, with: @placeholder_image
         fill_in :name, with: "Super Dog"
+        fill_in "Sex", with: "male"
+        fill_in "Description", with: "What a ferociously cuddly lion!"
+        fill_in :approximate_age, with: "80"
+
         click_button "Update Pet"
 
         expect(current_path).to eql("/pets/#{@dog1.id}")

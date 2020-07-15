@@ -1,33 +1,33 @@
 <html lang="en">
-    <div class="container">
+<div class="container">
+  <main>
+    <section class="shelter-details">
+      <h1><%= link_to(@shelter.name, "/shelters/#{@shelter.id}") %></h1>
+      <%= link_to("Update Shelter", "/shelters/#{@shelter.id}/edit") %>
+      <%= link_to("Delete Shelter", "/shelters/#{@shelter.id}", method: :delete) unless @shelter.has_approved_app? %>
+      <% @shelter.attributes.values_at("address", "city", "state", "zip").each do |attribute| %>
+      <%= tag.p attribute %>
+      <% end %>
+      <aside>
+        <%= link_to("See all the pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets") %>
+      </aside>
+    </section>
 
-    <!-- TODO: move navbar to application.html.erb  -->
-    <!--   -->
-
-    <main>
-      <section class="shelter-details">
-        <h1><%= link_to(@shelter.name, "/shelters/#{@shelter.id}") %></h1>
-        <%= link_to("Update Shelter", "/shelters/#{@shelter.id}/edit") %>
-        <%= link_to("Delete Shelter", "/shelters/#{@shelter.id}", method: :delete) %>
-        <% @shelter.attributes.values_at("address", "city", "state", "zip").each do |attribute| %>
-        <%= tag.p attribute %>
-        <% end %>
-        <aside>
-          <%= link_to("See all the pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets") %>
-        </aside>
-      </section>
-
-      <section class="shelter-reviews">
-        <%= link_to("Add Review", "/shelters/#{@shelter.id}/reviews/new") %>
-        <% @reviews.each do |review| %>
-          <%= tag.p review.title %>
-          <%= tag.p review.rating %>
-          <%= tag.p review.content %>
-          <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil? %>
-          <%= link_to("Edit Review", "/shelters/#{@shelter.id}/reviews/#{review.id}/edit") %>
-          <%= button_to("Delete Review", "/shelters/#{@shelter.id}/reviews/#{review.id}", method: :delete) %>
-        <% end %>
-      </section>
-
-    </main>
-  </div>
+    <section class="shelter-reviews">
+      <%= link_to("Add Review", "/shelters/#{@shelter.id}/reviews/new") %>
+      <% @shelter.reviews.each do |review| %>
+      <%= tag.p review.title %>
+      <%= tag.p review.rating %>
+      <%= tag.p review.content %>
+      <%= image_tag(review.image, alt: "Photo of #{@shelter.name}.", class: "review-pic") unless review.image.nil? %>
+      <%= link_to("Edit Review", "/shelters/#{@shelter.id}/reviews/#{review.id}/edit") %>
+      <%= button_to("Delete Review", "/shelters/#{@shelter.id}/reviews/#{review.id}", method: :delete) %>
+      <% end %>
+    </section>
+    <footer>
+      <%= tag.p "Count of pets: #{@shelter.pets.size}" %>
+      <%= tag.p "Average review: #{@shelter.reviews.average_rating}" %>
+      <%= tag.p "Applications on file: #{@shelter.pets.flat_map(&:pet_applications).size}" %>
+    </footer>
+  </main>
+</div>

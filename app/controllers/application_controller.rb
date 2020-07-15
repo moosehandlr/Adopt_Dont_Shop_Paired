@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   def favorites
     @favorites ||= Favorites.new(session[:favorites])
   end
+
+  # def pending_pets
+  #   @pending_pets ||= Pet.where(status: "Pending")
+  # end
 end

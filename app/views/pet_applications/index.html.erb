@@ -1,0 +1,12 @@
+<html lang="en">
+<div class="container">
+  <main>
+    <% if @applicants.empty? %>
+      <%= "There are no applications for this pet yet" %>
+    <% else %>
+      <% @applicants.uniq.each do |applicant| %>
+      <%= link_to(applicant.name, "/applications/#{applicant.id}") %>
+      <% end %>
+    <% end %>
+  </main>
+</div>

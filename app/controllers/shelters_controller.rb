@@ -5,15 +5,20 @@ class SheltersController < ApplicationController
 
   def show
     @shelter = Shelter.find(params[:id])
-    @reviews = @shelter.reviews
   end
 
   def new
   end
 
   def create
-    Shelter.create(shelter_params)
-    redirect_to "/shelters"
+    new_shelter = Shelter.new(shelter_params)
+    if new_shelter.save
+      redirect_to "/shelters"
+    else
+      empty_params = shelter_params.to_h.map {|k, v| k if v.empty? }.compact.join(", ")
+      flash[:submitted] = "Please add #{empty_params} information before submitting."
+      redirect_to "/shelters/new"
+    end
   end
 
   def edit
@@ -21,12 +26,23 @@ class SheltersController < ApplicationController
   end
 
   def update
-    shelter.update(update_params)
-    shelter.save
-    redirect_to "/shelters"
+    if shelter.update(shelter_params)
+      shelter.save
+      redirect_to "/shelters"
+    else
+      empty_params = shelter_params.to_h.map {|k, v| k if v.empty? }.compact.join(", ")
+      flash[:submitted] = "Please add #{empty_params} information before submitting."
+      redirect_to "/shelters/#{shelter.id}/edit"
+    end
   end
 
   def destroy
+    shelter = Shelter.find(params[:id])
+    shelter.pets.each do |pet|
+      pet.pet_applications.each do |app|
+        app.destroy!
+      end
+    end
     shelter.destroy
     redirect_to "/shelters"
   end
@@ -42,9 +58,5 @@ class SheltersController < ApplicationController
 
   def shelter_params
     params.permit(:name, :address, :city, :state, :zip)
-  end
-
-  def update_params
-    shelter_params.reject { |_, param| param.empty? }
   end
 end

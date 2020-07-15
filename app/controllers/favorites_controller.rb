@@ -9,9 +9,8 @@ class FavoritesController < ApplicationController
   end
 
   def index
-    @pets = Pet.all
-    @pets = @pets.find_all { |pet| favorites.pets.has_key?(pet.id.to_s) }
-    flash[:notice] = "You have no favorited pets" if @pets.empty?
+    @pending_pets = PetApplication.pets_with_apps
+    flash.now[:notice] = "You have no favorited pets" if favorites.favorite_pets.empty?
   end
 
   def destroy
