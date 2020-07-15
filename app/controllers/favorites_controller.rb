@@ -10,7 +10,7 @@ class FavoritesController < ApplicationController
 
   def index
     @pending_pets = PetApplication.pets_with_apps
-    flash[:notice] = "You have no favorited pets" if favorites.favorite_pets.empty?
+    flash.now[:notice] = "You have no favorited pets" if favorites.favorite_pets.empty?
   end
 
   def destroy
