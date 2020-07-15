@@ -49,6 +49,25 @@ describe Pet, type: :model do
       doggo.change_status
 
       expect(doggo.status).to eq("Pending")
+
+      doggo.change_status
+
+      expect(doggo.status).to eq("Adoptable")
+    end
+
+    it "#adoptable?" do
+      placeholder_image = "generic-image-placeholder.png"
+      shelter1 = Shelter.create(name: "Doggo House", address: "1323 Paper St", city: "Denver", state: "CO", zip: "000000")
+      doggo = Pet.create(
+        image: placeholder_image,
+        name: "Doggo",
+        approximate_age: 3,
+        sex: "M",
+        shelter: shelter1,
+        description: "What a cute animal!",
+        status: "Adoptable")
+
+      expect(doggo.adoptable?).to eq(true)
     end
   end
 end

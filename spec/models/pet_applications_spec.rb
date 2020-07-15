@@ -40,6 +40,12 @@ RSpec.describe PetApplication do
     it "can change_status" do
       @pet_app.change_status
       expect(@pet_app.pet_app_status).to eq("Approved")
+
+      @pet_app.change_status
+      expect(@pet_app.pet_app_status).to eq("Not Approved")
+
+      @pet_app.change_status
+      expect(@pet_app.pet_app_status).to eq("Approved")
     end
 
     it "knows if it is approved" do
