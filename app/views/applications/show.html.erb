@@ -2,7 +2,7 @@
 <div class="container">
   <main>
     <section class="application-details">
-      <%= @applicant.name %>
+      <%= link_to(@applicant.name, "/applications/#{@applicant.id}") %>
       <%= @applicant.address %>
       <%= @applicant.city %>
       <%= @applicant.state %>

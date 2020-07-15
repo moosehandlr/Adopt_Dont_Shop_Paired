@@ -8,7 +8,7 @@
     <h1>Name: <%= link_to(@pet.name, "/pets/#{@pet.id}") %></h1>
 
     <% if @pet.pet_applications.any?(&:approved?) %>
-    <h2>On hold for <%= "#{@approved_name}" %></h2>
+    <h2>On hold for <%= link_to("#{@approved.name}", "/applications/#{@approved.id}") %></h2>
     <% end %>
 
     <%= tag.p "Description: #{@pet.description}" %>
