@@ -111,4 +111,31 @@ RSpec.describe "Approving an Application Spec" do
         href: "/pet_applications/#{@billy_joel.id}/#{@doggo.id}")
     end
   end
+
+  describe "Revoking approved applications" do
+    it "can un-approve a pet application" do
+      approve_dog_link = "Approve Application for #{@doggo.name}"
+      unapprove_dog_link = "Unapprove Application for #{@doggo.name}"
+      application_show_page = "/applications/#{@prince.id}"
+
+      visit application_show_page
+      click_link approve_dog_link
+
+      visit application_show_page
+      expect(page).to_not have_link(approve_dog_link)
+
+      expect(page).to have_link("Unapprove Application for #{@doggo.name}",
+        href: "/pet_applications/#{@prince.id}/#{@doggo.id}/unapprove")
+
+      click_link unapprove_dog_link
+
+      expect(current_path).to eq(application_show_page)
+      expect(page).to have_link(approve_dog_link)
+
+      visit "/pets/#{@doggo.id}"
+
+      expect(page).to have_content("Status: Adoptable")
+      expect(page).to_not have_content("On hold for Prince")
+    end
+  end
 end
