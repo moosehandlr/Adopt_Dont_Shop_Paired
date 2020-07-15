@@ -7,5 +7,4 @@ class Shelter < ApplicationRecord
   def has_approved_app?
     self.pets.any?(&:has_approved_app?)
   end
-
 end

@@ -9,7 +9,7 @@ class FavoritesController < ApplicationController
   end
 
   def index
-    @pending_pets = Pet.where(status: "Pending")
+    @pending_pets = PetApplication.pets_with_apps
     flash[:notice] = "You have no favorited pets" if favorites.favorite_pets.empty?
   end
 
