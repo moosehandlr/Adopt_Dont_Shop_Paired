@@ -46,11 +46,11 @@ describe Pet, type: :model do
 
       expect(doggo.status).to eq("Adoptable")
 
-      doggo.change_status
+      doggo.change_status_to_pending
 
       expect(doggo.status).to eq("Pending")
 
-      doggo.change_status
+      doggo.change_status_to_adoptable
 
       expect(doggo.status).to eq("Adoptable")
     end

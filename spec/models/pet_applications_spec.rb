@@ -38,13 +38,13 @@ RSpec.describe PetApplication do
     end
 
     it "can change_status" do
-      @pet_app.change_status
+      @pet_app.change_status_to_approved
       expect(@pet_app.pet_app_status).to eq("Approved")
 
-      @pet_app.change_status
+      @pet_app.change_status_to_not_approved
       expect(@pet_app.pet_app_status).to eq("Not Approved")
 
-      @pet_app.change_status
+      @pet_app.change_status_to_approved
       expect(@pet_app.pet_app_status).to eq("Approved")
     end
 
@@ -52,7 +52,7 @@ RSpec.describe PetApplication do
       expect(@pet_app.pet_app_status).to eq("Not Approved")
       expect(@pet_app.approved?).to eq(false)
 
-      @pet_app.change_status
+      @pet_app.change_status_to_approved
       expect(@pet_app.approved?).to eq(true)
     end
   end
