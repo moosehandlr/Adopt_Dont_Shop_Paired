@@ -10,6 +10,7 @@ class Pet < ApplicationRecord
 
   def change_status_to_pending
     self.status = "Pending"
+    self.save
   end
 
   def adoptable?
@@ -18,5 +19,7 @@ class Pet < ApplicationRecord
 
   def change_status_to_adoptable
     self.status = "Adoptable"
+    self.save
   end
+
 end
