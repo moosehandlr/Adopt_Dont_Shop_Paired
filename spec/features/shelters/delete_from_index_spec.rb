@@ -76,6 +76,51 @@ describe "Shelter Delete From Shelter Index Spec" do
         expect(page).to_not have_content(shelter1.name)
         expect(page).to have_content("New Shelter")
       end
+
+      it "If a shelter doesn't have any pets with a pending status I can delete that shelter" do
+
+        placeholder_image = "generic-image-placeholder.png"
+
+        shelter1 = Shelter.create!(
+          name: "Doggo House",
+          address: "1323 Paper St",
+          city: "Denver",
+          state: "CO",
+          zip: "000000")
+
+        doggo = Pet.create!(
+          image: placeholder_image,
+          name: "Doggo",
+          approximate_age: 3,
+          sex: "M",
+          shelter: shelter1,
+          description: "What a cute animal!",
+          status: "Adoptable"
+        )
+
+        application1 = Application.create!(name: "Billy Joel",
+          address: "22 Jump Street",
+          city: "Denver",
+          state: "CO",
+          zip: "80808",
+          phone_number: "000000000",
+          description: "Famous and rich")
+
+        PetApplication.create!(pet_id: doggo.id, application_id: application1.id )
+
+
+        visit "/shelters"
+
+        click_link "Delete Shelter"
+        expect(current_path).to eq("/shelters")
+
+        expect(page).to_not have_content("Doggo House")
+        expect(page).to have_content("New Shelter")
+
+        visit "/pets"
+
+        expect(page).to_not have_content("Doggo")
+      end
     end
   end
 end
