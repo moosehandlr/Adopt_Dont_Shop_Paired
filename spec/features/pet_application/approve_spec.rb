@@ -90,4 +90,25 @@ RSpec.describe "Approving an Application Spec" do
       end
     end
   end
+
+  describe "Pets can only have one approved application on them at any time" do
+    it "I can not approve any other applications for a pet_app that has been approved" do
+      approve_dog_link = "Approve Application for #{@doggo.name}"
+
+      visit "/applications/#{@prince.id}"
+      click_link approve_dog_link
+
+      visit "/pets/#{@doggo.id}/applications"
+      expect(page).to have_link(@prince.name, href: "/applications/#{@prince.id}")
+      expect(page).to have_link(@billy_joel.name, href: "/applications/#{@billy_joel.id}")
+
+      visit "/applications/#{@prince.id}"
+      expect(page).to_not have_link("Approve Application for #{@doggo.name}",
+        href: "/pet_applications/#{@prince.id}/#{@doggo.id}")
+
+      visit "/applications/#{@billy_joel.id}"
+      expect(page).to_not have_link("Approve Application for #{@doggo.name}",
+        href: "/pet_applications/#{@billy_joel.id}/#{@doggo.id}")
+    end
+  end
 end
