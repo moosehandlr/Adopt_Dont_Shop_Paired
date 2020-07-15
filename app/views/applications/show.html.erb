@@ -13,11 +13,9 @@
       <% @applicant.pets.uniq.each do |pet|  %>
           <%= link_to(pet.name, "/pets/#{pet.id}") %>
           <% if PetApplication.where(pet_id: pet.id).none?(&:approved?) %>
-          <%= link_to("Approve Application for #{pet.name}",
-            "/pet_applications/#{@applicant.id}/#{pet.id}", method: :patch) %>
-            <% elsif PetApplication.where(application_id: @applicant.id, pet_id: pet.id).first(&:approved?) %>
-          <%= link_to("Unapprove Application for #{pet.name}",
-            "/pet_applications/#{@applicant.id}/#{pet.id}/unapprove", method: :patch) %>
+          <%= link_to("Approve Application for #{pet.name}", "/pet_applications/#{@applicant.id}/#{pet.id}", method: :patch) %>
+          <% elsif PetApplication.where(application_id: @applicant.id, pet_id: pet.id).one?(&:approved?) %>
+          <%= link_to("Unapprove Application for #{pet.name}", "/pet_applications/#{@applicant.id}/#{pet.id}/unapprove", method: :patch) %>
           <% end %>
       <% end %>
     </section>

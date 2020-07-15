@@ -5,20 +5,20 @@ class PetApplicationsController < ApplicationController
 
   def update
     pet_app = PetApplication.where(pet_id: params[:pet_id], application_id: params[:applicant_id]).first
-    pet_app.change_status
+    pet_app.change_status_to_approved
     pet_app.save
     pet = Pet.find(params[:pet_id])
-    pet.change_status
+    pet.change_status_to_pending
     pet.save
     redirect_to "/pets/#{params[:pet_id]}"
   end
 
   def unapprove
     pet_app = PetApplication.where(pet_id: params[:pet_id], application_id: params[:applicant_id]).first
-    pet_app.change_status
+    pet_app.change_status_to_not_approved
     pet_app.save
     pet = Pet.find(params[:pet_id])
-    pet.change_status
+    pet.change_status_to_adoptable
     pet.save
     redirect_to "/applications/#{params[:applicant_id]}"
   end
