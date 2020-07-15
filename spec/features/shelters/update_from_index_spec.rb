@@ -60,6 +60,10 @@ describe "Shelter Update From Shelter Index Spec" do
         expect(current_path).to eql(update_link)
 
         fill_in :name, with: "Canine Orphanage"
+        fill_in "Address", with: "57799 Lamp Post Road"
+        fill_in "City", with: "Denver"
+        fill_in "State", with: "CO"
+        fill_in "Zip", with: "00000"
         click_button update
 
         expect(current_path).to eql("/shelters")
