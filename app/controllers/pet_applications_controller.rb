@@ -4,8 +4,7 @@ class PetApplicationsController < ApplicationController
   end
 
   def update
-    pet_app = PetApplication.where(pet_id: params[:pet_id],
-                           application_id: params[:applicant_id]).first
+    pet_app = PetApplication.where(pet_id: params[:pet_id], application_id: params[:applicant_id]).first
     pet_app.change_status
     pet_app.save
     pet = Pet.find(params[:pet_id])
@@ -14,4 +13,13 @@ class PetApplicationsController < ApplicationController
     redirect_to "/pets/#{params[:pet_id]}"
   end
 
+  def unapprove
+    pet_app = PetApplication.where(pet_id: params[:pet_id], application_id: params[:applicant_id]).first
+    pet_app.change_status
+    pet_app.save
+    pet = Pet.find(params[:pet_id])
+    pet.change_status
+    pet.save
+    redirect_to "/applications/#{params[:applicant_id]}"
+  end
 end
