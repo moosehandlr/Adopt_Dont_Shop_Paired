@@ -6,6 +6,7 @@ class PetApplication < ApplicationRecord
 
   def change_status_to_approved
     self.pet_app_status = "Approved"
+    self.save
   end
 
   def approved?
@@ -14,5 +15,6 @@ class PetApplication < ApplicationRecord
 
   def change_status_to_not_approved
     self.pet_app_status = "Not Approved"
+    self.save
   end
 end
