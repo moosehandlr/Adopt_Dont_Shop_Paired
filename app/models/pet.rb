@@ -22,4 +22,8 @@ class Pet < ApplicationRecord
     self.save
   end
 
+  def has_approved_app?
+    pet_apps = PetApplication.where(pet_id: self.id)
+    pet_apps.any?(&:approved?)
+  end
 end
