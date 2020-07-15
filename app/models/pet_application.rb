@@ -17,4 +17,10 @@ class PetApplication < ApplicationRecord
     self.pet_app_status = "Not Approved"
     self.save
   end
+
+  def self.pets_with_apps
+    self.all.map do |pet_app|
+      Pet.find(pet_app.pet_id)
+    end.uniq
+  end
 end
