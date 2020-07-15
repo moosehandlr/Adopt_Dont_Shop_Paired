@@ -42,7 +42,6 @@ class SheltersController < ApplicationController
     shelter.pets.each do |pet|
       pet.pet_applications.each do |app|
         app.destroy!
-        # require "pry"; binding.pry
       end
     end
     shelter.destroy
